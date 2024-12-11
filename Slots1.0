@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slots Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        #game {
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            width: 300px;
+            background-color: #333;
+        }
+        #slots {
+            display: flex;
+            justify-content: space-around;
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        #controls button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #controls button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+        #message {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Slots Game</h1>
+    <div id="game">
+        <div id="money">Money: $<span id="money-value">100</span></div>
+        <div id="slots">
+            <span id="slot1">🍒</span>
+            <span id="slot2">🍋</span>
+            <span id="slot3">🍉</span>
+        </div>
+        <div id="controls">
+            <button id="spin-button">Spin</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const moneyDisplay = document.getElementById('money-value');
+        const messageDisplay = document.getElementById('message');
+        const slots = [
+            document.getElementById('slot1'),
+            document.getElementById('slot2'),
+            document.getElementById('slot3')
+        ];
+        const spinButton = document.getElementById('spin-button');
+
+        let money = 100;
+        const symbols = ["🍒", "🍋", "🍉", "⭐", "🔔", "🍇"];
+
+        function spinSlots() {
+            if (money <= 0) {
+                messageDisplay.textContent = "You are out of money! Refresh to play again.";
+                spinButton.disabled = true;
+                return;
+            }
+
+            money -= 10;
+            moneyDisplay.textContent = money;
+
+            const results = slots.map(slot => {
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                slot.textContent = randomSymbol;
+                return randomSymbol;
+            });
+
+            if (results[0] === results[1] && results[1] === results[2]) {
+                money += 50;
+                messageDisplay.textContent = "Jackpot! You won $50!";
+            } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                money += 20;
+                messageDisplay.textContent = "Nice! You won $20!";
+            } else {
+                messageDisplay.textContent = "Better luck next time!";
+            }
+
+            moneyDisplay.textContent = money;
+            if (money <= 0) {
+                spinButton.disabled = true;
+            }
+        }
+
+        spinButton.addEventListener('click', spinSlots);
+    </script>
+</body>
+</html>
