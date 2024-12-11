@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sexy Slots</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #9b1e1e, #ff4d6a);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 4em;
+            color: #ffd700;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+            margin-bottom: 40px;
+            font-family: 'Dancing Script', cursive;
+            letter-spacing: 5px;
+        }
+        #game {
+            background-color: rgba(0, 0, 0, 0.85);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            width: 380px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+        }
+        #money {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        #slots {
+            display: flex;
+            justify-content: space-around;
+            font-size: 3.5em;
+            margin: 20px 0;
+        }
+        #controls button {
+            padding: 15px 50px;
+            margin: 15px;
+            font-size: 1.4em;
+            font-weight: bold;
+            border-radius: 50px;
+            border: none;
+            background: #ff5a5f;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        #controls button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        #controls button:hover:enabled {
+            background-color: #ff2a34;
+            transform: scale(1.1);
+        }
+        #message {
+            font-size: 1.3em;
+            margin-top: 20px;
+            color: #ffdf00;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slot-symbol {
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .jackpot {
+            color: #ff6347;
+            font-weight: bold;
+        }
+        .symbol-rotate {
+            animation: rotate-symbols 0.5s ease-in-out infinite;
+        }
+
+        @keyframes rotate-symbols {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sexy Slots</h1>
+    <div id="game">
+        <div id="money">Balance: $<span id="money-value">100</span></div>
+        <div id="slots">
+            <span id="slot1" class="slot-symbol">🍑</span>
+            <span id="slot2" class="slot-symbol">🍆</span>
+            <span id="slot3" class="slot-symbol">🍒</span>
+        </div>
+        <div id="controls">
+            <button id="spin-button">Spin</button>
+            <button id="add-money-button">Add Funds</button>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const moneyDisplay = document.getElementById('money-value');
+        const messageDisplay = document.getElementById('message');
+        const slots = [
+            document.getElementById('slot1'),
+            document.getElementById('slot2'),
+            document.getElementById('slot3')
+        ];
+        const spinButton = document.getElementById('spin-button');
+        const addMoneyButton = document.getElementById('add-money-button');
+
+        let money = 100;
+        const symbols = ["🍆", "🍑", "🍒", "🧴", "💋", "👙"];
+
+        function spinSlots() {
+            if (money <= 0) {
+                messageDisplay.textContent = "You are out of money! Please refresh to continue.";
+                spinButton.disabled = true;
+                return;
+            }
+
+            money -= 10;
+            moneyDisplay.textContent = money;
+
+            const results = slots.map(slot => {
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                slot.textContent = randomSymbol;
+                return randomSymbol;
+            });
+
+            slots.forEach(slot => {
+                slot.classList.add('symbol-rotate');
+            });
+
+            setTimeout(() => {
+                slots.forEach(slot => {
+                    slot.classList.remove('symbol-rotate');
+                });
+
+                if (results[0] === results[1] && results[1] === results[2]) {
+                    money += 100;
+                    messageDisplay.textContent = "💋 Jackpot! You won $100!";
+                    messageDisplay.classList.add('jackpot');
+                } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                    money += 30;
+                    messageDisplay.textContent = "You won $30! Nice!";
+                    messageDisplay.classList.remove('jackpot');
+                } else {
+                    messageDisplay.textContent = "Better luck next time!";
+                    messageDisplay.classList.remove('jackpot');
+                }
+
+                moneyDisplay.textContent = money;
+                if (money <= 0) {
+                    spinButton.disabled = true;
+                }
+            }, 500);
+        }
+
+        function addMoney() {
+            money += 100;
+            moneyDisplay.textContent = money;
+            messageDisplay.textContent = "You added $100 to your balance!";
+            messageDisplay.classList.remove('jackpot');
+            spinButton.disabled = false;
+        }
+
+        spinButton.addEventListener('click', spinSlots);
+        addMoneyButton.addEventListener('click', addMoney);
+    </script>
+</body>
+</html>
