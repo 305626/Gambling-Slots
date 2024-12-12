@@ -123,7 +123,7 @@
         const addMoneyButton = document.getElementById('add-money-button');
 
         let money = 100;
-        const symbols = ["💸", "💎", "👑", "🏅", "⌚️", "💰"];
+        const symbols = ["💸", "💎", "👑", "🏅", "🏆", "💰"];
 
         function spinSlots() {
             if (money <= 0) {
@@ -152,11 +152,11 @@
 
                 if (results[0] === results[1] && results[1] === results[2]) {
                     money += 100;
-                    messageDisplay.textContent = "💋 Jackpot! You won $100!";
+                    messageDisplay.textContent = "🏆 Jackpot! You won $100!";
                     messageDisplay.classList.add('jackpot');
                 } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
-                    money += 30;
-                    messageDisplay.textContent = "You won $30! Nice!";
+                    money += 20;
+                    messageDisplay.textContent = "You won $20! Nice!";
                     messageDisplay.classList.remove('jackpot');
                 } else {
                     messageDisplay.textContent = "Better luck next time!";
