@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sexy Slots</title>
+    <title>Skibidi Slots</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(45deg, #9b1e1e, #ff4d6a);
+            background: linear-gradient(45deg, darkblue, lightblue);
             color: #fff;
             display: flex;
             justify-content: center;
@@ -53,7 +53,7 @@
             font-weight: bold;
             border-radius: 50px;
             border: none;
-            background: #ff5a5f;
+            background: darkblue;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
@@ -65,7 +65,7 @@
             transform: scale(1);
         }
         #controls button:hover:enabled {
-            background-color: #ff2a34;
+            background-color: blue;
             transform: scale(1.1);
         }
         #message {
@@ -96,13 +96,13 @@
     </style>
 </head>
 <body>
-    <h1>Sexy Slots</h1>
+    <h1>Skibidi Slots</h1>
     <div id="game">
         <div id="money">Balance: $<span id="money-value">100</span></div>
         <div id="slots">
-            <span id="slot1" class="slot-symbol">🍑</span>
-            <span id="slot2" class="slot-symbol">🍆</span>
-            <span id="slot3" class="slot-symbol">🍒</span>
+            <span id="slot1" class="slot-symbol">💎</span>
+            <span id="slot2" class="slot-symbol">💎</span>
+            <span id="slot3" class="slot-symbol">💎</span>
         </div>
         <div id="controls">
             <button id="spin-button">Spin</button>
@@ -123,7 +123,7 @@
         const addMoneyButton = document.getElementById('add-money-button');
 
         let money = 100;
-        const symbols = ["🍆", "🍑", "🍒", "🧴", "💋", "👙"];
+        const symbols = ["💸", "💎", "👑", "🏅", "⌚️", "💰"];
 
         function spinSlots() {
             if (money <= 0) {
