@@ -23,7 +23,7 @@
             color: #ffd700;
             text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
             margin-bottom: 40px;
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Soin Sans Pro', latin 2;
             letter-spacing: 5px;
         }
         #game {
@@ -60,8 +60,6 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
         #controls button:disabled {
-            background-color: #888;
-            cursor: not-allowed;
             transform: scale(1);
         }
         #controls button:hover:enabled {
@@ -131,6 +129,7 @@
                 spinButton.disabled = true;
                 return;
             }
+            spinButton.disabled = true;
 
             money -= 10;
             moneyDisplay.textContent = money;
@@ -166,9 +165,14 @@
                 moneyDisplay.textContent = money;
                 if (money <= 0) {
                     spinButton.disabled = true;
+                    messageDisplay.textContent="Refresh to play again"
                 }
+                setTimeout(() => {
+                    spinButton.disabled = false;
+                }, 200);
             }, 500);
         }
+        
 
         function addMoney() {
             money += 100;
